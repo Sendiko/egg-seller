@@ -1,7 +1,8 @@
-const { Order } = require("../models");
+import { Request, Response } from "express";
+import Order from "../models/order";
 
 const OrderController = {
-  index: async (req, res) => {
+  index: async (req: Request, res: Response): Promise<Response> => {
     try {
       const orders = await Order.findAll();
       return res.status(200).json({
@@ -10,15 +11,15 @@ const OrderController = {
         data: orders,
       });
     } catch (error) {
-      console.log(error);
-
+      console.error(error);
       return res.status(500).json({
         status: 500,
         error: "Failed to fetch orders",
       });
     }
   },
-  create: async (req, res) => {
+
+  create: async (req: Request, res: Response): Promise<Response> => {
     try {
       const newOrder = await Order.create(req.body);
       return res.status(201).json({
@@ -27,15 +28,15 @@ const OrderController = {
         data: newOrder,
       });
     } catch (error) {
-      console.log(error);
-
+      console.error(error);
       return res.status(500).json({
         status: 500,
         error: "Failed to create order",
       });
     }
   },
-  show: async (req, res) => {
+
+  show: async (req: Request, res: Response): Promise<Response> => {
     try {
       const { id } = req.params;
       const orderToShow = await Order.findByPk(id);
@@ -51,13 +52,15 @@ const OrderController = {
         data: orderToShow,
       });
     } catch (error) {
+      console.error(error);
       return res.status(500).json({
         status: 500,
         error: "Failed to fetch order",
       });
     }
   },
-  update: async (req, res) => {
+
+  update: async (req: Request, res: Response): Promise<Response> => {
     try {
       const orderToUpdate = await Order.findByPk(req.params.id);
       if (!orderToUpdate) {
@@ -73,13 +76,15 @@ const OrderController = {
         data: orderToUpdate,
       });
     } catch (error) {
+      console.error(error);
       return res.status(500).json({
         status: 500,
         error: "Failed to update order",
       });
     }
   },
-  delete: async (req, res) => {
+
+  delete: async (req: Request, res: Response): Promise<Response> => {
     try {
       const { id } = req.params;
       const orderToDelete = await Order.findByPk(id);
@@ -95,6 +100,7 @@ const OrderController = {
         message: "Order deleted successfully",
       });
     } catch (error) {
+      console.error(error);
       return res.status(500).json({
         status: 500,
         error: "Failed to delete order",
@@ -103,4 +109,4 @@ const OrderController = {
   },
 };
 
-module.exports = OrderController;
+export default OrderController;
