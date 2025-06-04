@@ -27,6 +27,10 @@ const Order = db.define("orders", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  eggImage: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
 Order.sync({ alter: true })
